@@ -1,77 +1,53 @@
-var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
-var packageBody,ground
-const Engine = Matter.Engine;
-const World = Matter.World;
-const Bodies = Matter.Bodies;
-const Body = Matter.Body;
+var bullet,wall,wall2,wall3,wall4;
+var car2,car3,car4;
 
-function preload()
-{
-	helicopterIMG=loadImage("helicopter.png")
-	packageIMG=loadImage("package.png")
-}
+
+var weight,speed;
+
+var damage;
+var thick ;
+
 
 function setup() {
-	createCanvas(800, 700);
-	rectMode(CENTER);
-	
-	
-		
+  createCanvas(1600,600);
 
-	helicopterSprite=createSprite(width/2, 200, 10,10);
-	helicopterSprite.addImage(helicopterIMG)
-	helicopterSprite.scale=0.6
-
-	groundSprite=createSprite(width/2, height-35, width,10);
-	groundSprite.shapeColor=color(255)
-
-
-	engine = Engine.create();
-	world = engine.world;
-
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:3, isStatic:true});
-	World.add(world, packageBody);
-	
-
-	//Create a Ground
-	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
- 	World.add(world, ground);
-
-
-
-
-
-	Engine.run(engine);
-  
-}
-
-
-function draw() {
-  rectMode(CENTER);
-  background(0);
-  
-  if(KeyWentDown(down)){
-	packageSprite=createSprite(width/2, 80, 10,10);
-	   packageSprite.addImage(packageIMG)
-	   packageSprite.scale=0.2
-	   World.add(world,packageSprite);
-}
-packageSprite.x= packageBody.position.x 
-  packageSprite.y= packageBody.position.y 
-
-  
  
-  drawSprites();
-  
+
+  speed = random(223,321);
+  speed2 = random(30,103);
+  speed3 = random(30,103);
+  speed4 = random(30,103);
+  weight = random(30,52);
+  thick = random(20,40)
+
+  bullet =  createSprite(50, 200, 50, 50);
+bullet.shapeColor = "white"
+  bullet.velocityX = speed;
+
+
+ 
+  wall = createSprite(1200,200,60,100);
+ 
+
+
 }
+function draw() {
 
-function keyPressed() {
- if (keyCode === DOWN_ARROW) {
-    // Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
 
+
+  background(0,255,0);
+  
+  if(wall.x-bullet.x<(bullet.width+wall.width)/2){
+    bullet.velocityX = 0
+     var damage = 0.5*weight*weight*weight/thick/thick/thick
+     if(damage>3.68){
+       bullet.shapeColor = "red"
+     }
+     if(damage<3.68){
+      bullet.shapeColor = "green"
+    }
     
   }
-}
-
-
-
+  console.log(damage)
+    drawSprites();
+  }
